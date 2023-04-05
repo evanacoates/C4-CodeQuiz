@@ -11,12 +11,19 @@ let quizScore = document.getElementById('quizScore')
 startBtn.addEventListener('click', startQuiz);
 
 function startQuiz(){
-    console.log('started');
+    console.log('started')
+    startBtn.classList.add('hide');
 }
 
-let questions = [{
+const questions = [{
     question : "What is the http error code that indicates the server is unable to fulfill a request?",
-    answerA : "600",
+    answers: [
+        { text; "600", correct: false},
+        { text; "501", correct: true},
+        { text; "401", correct: false},
+        { text; "400", correct: false},
+
+    
     answerB : "500",
     answerC : "401",
     answerD : "400",
