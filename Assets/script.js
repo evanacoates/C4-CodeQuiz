@@ -1,4 +1,4 @@
-const startBtn = document.getElementById('start');
+let startBtn = document.getElementById('start');
 let quiz = document.getElementById('quiz');
 let question = document.getElementById('question');
 let timer = document.getElementById('timer');
@@ -7,6 +7,12 @@ let answerB = document.getElementById('B');
 let answerC = document.getElementById('C');
 let answerD = document.getElementById('D');
 let quizScore = document.getElementById('quizScore')
+
+startBtn.addEventListener('click', startQuiz);
+
+function startQuiz(){
+    console.log('started');
+}
 
 let questions = [{
     question : "What is the http error code that indicates the server is unable to fulfill a request?",
@@ -49,37 +55,16 @@ let questions = [{
     correct : "answerB"
 }]
 
-let score = 0
+var timeRemaining = 30;
+var elem = document.getElementById('timer');
 
-function answerCheck(answer){
-    if(questions[questionIndex].correct == answer){
-        score++;
-        correctAnswer();
-    }else{
-        wrongAnswer();
-    }
-    if(questionIndex < finalQuestionIndex){
-        count = 0;
-        questionIndex++;
-        nextQuestion();
+var timerId = setInterval(countdown, 1000);
 
-    }else{
-        scoreRender();
-    }
-}
-
-startBtn.addEventListener("click", startQuiz);
-
-function startQuiz(){
-    startBtn.style.display = "none";
-    counterRender();
-    Timer = setInterval(counterRender,1000);
-    questionRender();
-    quiz.style.display ="block";
-} 
-
-function scoreRender(){
-    scoreContainer.style.display ="block"
-    let scorePercent = Math.round(100 * score / questions.length);
-    scoreContainer.innerHtml
-}
+function countdown() {
+  if (timeRemaining == 0) {
+    clearTimeout(timerId);
+    doSomething();
+  } else {
+    elem.innerHTML = timeRemaining + ' seconds remaining';
+    timeRemaining--;
+  }}
