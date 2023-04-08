@@ -1,0 +1,42 @@
+#quiz {
+    margin: 22px auto;
+    max-width: 500px;
+    text-align: center;
+    display: none;
+    background-color: blanchedalmond;
+  }
+  
+  #question {
+    font-size: 22px;
+    margin-bottom: 12x;
+  }
+  
+  #choices {
+    display: inline-block;
+    text-align: left;
+  }
+  
+  .choice {
+    display: block;
+    margin-bottom: 12px;
+  }
+  
+  label {
+    font-size: 16px;
+    margin-left: 12px;
+  }
+  
+  #submit {
+    margin-top: 12px;
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    background-color: red;
+    color: black;
+  }
+
+  #start{
+    display: flex;
+    margin: auto;
+  }
+  

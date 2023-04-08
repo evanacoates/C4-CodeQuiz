@@ -1,73 +1,71 @@
-let startBtn = document.getElementById('startBtn');
-let quiz = document.getElementById('quiz');
-let question = document.getElementById('questions');
-let timer = document.getElementById('timer');
-let answerA = document.getElementById('A');
-let answerB = document.getElementById('B');
-let answerC = document.getElementById('C');
-let answerD = document.getElementById('D');
-let quizScore = document.getElementById('quizScore')
+const quiz = document.getElementById('quiz');
+const questionEl = document.getElementById('question');
+const choicesEl = document.getElementById('choices');
+const submitBtn = document.getElementById('submit');
 
+const questions = [
+  {
+    question: 'What is the http error code that indicates the server is unable to fulfill a request?',
+    choices: ['600', '500', '401', '400'],
+    answer: '500'
+  },
+  {
+    question: '"Which of the following defines a JavaScript file?"',
+    choices: ['.jvs', '.js', '.script', '.jscript'],
+    answer: '.js'
+  },
+  {
+    question: 'Is coding fun?',
+    choices: ['yes', 'no', 'maybe', 'ask me on the 17th of April'],
+    answer: 'yes'
+  }
+];
 
-startBtn.addEventListener ("click", startQuiz);
+let currentQuestion = 0;
 
-const questions = [{
-    question : "What is the http error code that indicates the server is unable to fulfill a request?",
-    answerA : "600",
-    answerB : "500",
-    answerC : "401",
-    answerD : "400",
-    correct : "answerB"
-},
-{
-    question : "Which of the following characters are used to create and end an array?",
-    answerA : "{}",
-    answerB : "==",
-    answerC : "[]",
-    answerD : "<>",
-    correct : "answerC"
-},
-{
-    question : "Which of the following defines a JavaScript file?",
-    answerA : ".jvsc",
-    answerB : ".js",
-    answerC : ".jv",
-    answerD : ".jscript",
-    correct : "answerB"
-},
-{
-    question : "CRUD is an acronym for which of the following?",
-    answerA : "Create, replace, update, delete",
-    answerB : "Create, replace, undo, delete",
-    answerC : "Call, read, update, delete",
-    answerD : "Create, read, update, delete",
-    correct : "answerD"
-},
-{
-    question : "Is coding fun?",
-    answerA : "No",
-    answerB : "Yes",
-    answerC : "Sorta",
-    answerD : "Lasagna",
-    correct : "answerB"
-}]
-
-const lastQuestion = questions.length -1;
-let runningQuestion = 0;
-
-function startQuiz(){
-    startBtn.style.display = "none";
-    renderQuestion();
-    quiz.style.display = "block";
-
-    
+function showQuestion() {
+  const question = questions[currentQuestion];
+  questionEl.textContent = question.question;
+  choicesEl.innerHTML = '';
+  question.choices.forEach(choice => {
+    const label = document.createElement('label');
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = 'choice';
+    radio.value = choice;
+    label.appendChild(radio);
+    label.appendChild(document.createTextNode(choice));
+    choicesEl.appendChild(label);
+  });
 }
-function renderQuestion(){
-    let q = questions[runningQuestion]
 
-    question.innerHTML = "<p>"+ q.question + "</p>";
-    choiceA.innerHTML = q.choiceA;
-    choiceB.innerHTML = q.choiceB;
-    choiceC.innerHTML = q.choiceC;
-    choiceD.innerHTML = q.choiceD;
+function checkAnswer() {
+  const selected = document.querySelector('input[name=choice]:checked');
+  if (!selected) return;
+  const answer = selected.value;
+  if (answer === questions[currentQuestion].answer) {
+    alert('Correct! Nice Work!');
+  } else {
+    alert(`Incorrect! The answer was ${questions[currentQuestion].answer}`);
+  }
+  currentQuestion++;
+  if (currentQuestion === questions.length) {
+    quiz.innerHTML = '<h2>You have completed the quiz! Thanks for playing.</h2>';
+  } else {
+    showQuestion();
+  }
+}
+
+showQuestion();
+submitBtn.addEventListener('click', checkAnswer);
+
+const startBtn = document.getElementById('start');
+startBtn.addEventListener('click', startQuiz);
+
+function startQuiz() {
+  startBtn.style.display = 'none';
+  quiz.style.display = 'block';
+  
+  // Call the showQuestion function to display the first question
+  showQuestion();
 }
