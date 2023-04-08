@@ -1,7 +1,11 @@
 const quiz = document.getElementById('quiz');
 const questionEl = document.getElementById('question');
 const choicesEl = document.getElementById('choices');
-const submitBtn = document.getElementById('submit');
+const submit = document.getElementById('submit');
+const startBtn = document.getElementById('start');
+
+startBtn.addEventListener('click', startQuiz);
+
 
 const questions = [
   {
@@ -16,15 +20,15 @@ const questions = [
   },
   {
     question: 'Is coding fun?',
-    choices: ['yes', 'no', 'maybe', 'ask me on the 17th of April'],
+    choices: ['yes', 'no', 'maybe', 'ask me on April 17th'],
     answer: 'yes'
   }
 ];
 
-let currentQuestion = 0;
+let currentQ = 0;
 
-function showQuestion() {
-  const question = questions[currentQuestion];
+function showQ() {
+  const question = questions[currentQ];
   questionEl.textContent = question.question;
   choicesEl.innerHTML = '';
   question.choices.forEach(choice => {
@@ -39,33 +43,28 @@ function showQuestion() {
   });
 }
 
-function checkAnswer() {
+function checkAns() {
   const selected = document.querySelector('input[name=choice]:checked');
   if (!selected) return;
   const answer = selected.value;
-  if (answer === questions[currentQuestion].answer) {
+  if (answer === questions[currentQ].answer) {
     alert('Correct! Nice Work!');
   } else {
-    alert(`Incorrect! The answer was ${questions[currentQuestion].answer}`);
+    alert(`Incorrect! The answer was ${questions[currentQ].answer}`);
   }
-  currentQuestion++;
-  if (currentQuestion === questions.length) {
-    quiz.innerHTML = '<h2>You have completed the quiz! Thanks for playing.</h2>';
+  currentQ++;
+  if (currentQ === questions.length) {
+    quiz.innerHTML = '<h2>You have completed the quiz! Happy coding!</h2>';
   } else {
-    showQuestion();
+    showQ();
   }
 }
 
-showQuestion();
-submitBtn.addEventListener('click', checkAnswer);
+showQ();
+submit.addEventListener('click', checkAns);
 
-const startBtn = document.getElementById('start');
-startBtn.addEventListener('click', startQuiz);
 
 function startQuiz() {
   startBtn.style.display = 'none';
   quiz.style.display = 'block';
-  
-  // Call the showQuestion function to display the first question
-  showQuestion();
 }
